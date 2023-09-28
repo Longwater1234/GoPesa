@@ -36,6 +36,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -89,7 +90,7 @@ func (api *APICONTEXT) createBearerToken(apiKey string) string {
 func (api *APICONTEXT) generateSessionID() string {
 	api.setDefault()
 	endpoint := "getSession"
-	req, err := http.NewRequest(string(GET), api.getURL(endpoint), nil)
+	req, err := http.NewRequest(GET.String(), api.getURL(endpoint), nil)
 	mustNot("Error making new request: ", err)
 
 	for k, v := range api.getHeaders() {
@@ -100,20 +101,19 @@ func (api *APICONTEXT) generateSessionID() string {
 	}
 
 	resp, err := client.Do(req)
-
 	mustNot("Error requesting Session ID: ", err)
-
 	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
 
+	sw := strings.Builder{}
+	_, err = io.Copy(&sw, resp.Body)
 	mustNot("Error reading response body: ", err)
 
 	var result map[string]string
-	json.Unmarshal(body, &result)
+	json.Unmarshal([]byte(sw.String()), &result)
 
 	if result["output_SessionID"] != "" {
 		return result["output_SessionID"]
 	} else {
-		return string(body)
+		return sw.String()
 	}
 }
