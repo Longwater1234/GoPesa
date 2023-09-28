@@ -29,12 +29,13 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"time"
 )
 
 // A helper function that will check errors
 func mustNot(message string, err error) {
 	if err != nil {
-		log.Println(message, err)
+		log.Fatalln(message, err)
 	}
 }
 
@@ -130,7 +131,9 @@ func (api *APICONTEXT) sendRequest(transactionQuery map[string]string, method st
 	for k, v := range api.getHeaders() {
 		req.Header.Set(k, v)
 	}
-	client := &http.Client{}
+	client := &http.Client{
+		Timeout: time.Second * 15,
+	}
 
 	resp, err := client.Do(req)
 	mustNot("Error getting response", err)

@@ -36,6 +36,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"time"
 )
 
 // Type kEYS that will receive values from the config.json
@@ -95,7 +96,9 @@ func (api *APICONTEXT) generateSessionID() string {
 	for k, v := range api.getHeaders() {
 		req.Header.Set(k, v)
 	}
-	client := &http.Client{}
+	client := &http.Client{
+		Timeout: time.Second * 15,
+	}
 
 	resp, err := client.Do(req)
 
