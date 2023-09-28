@@ -34,8 +34,8 @@ import (
 	"encoding/pem"
 	"fmt"
 	"io"
-	"os"
 	"net/http"
+	"os"
 )
 
 // Type kEYS that will receive values from the config.json
@@ -44,7 +44,7 @@ type kEYS struct {
 	APIKEY    string
 }
 
-// Initialization method that will read keys from
+// Initialize method that will read keys from
 // config.json and assign them to PUBLICKEY AND APIKEY
 // It will return a pointer of APICONTEXT with the
 // new keys
@@ -83,7 +83,8 @@ func (api *APICONTEXT) createBearerToken(apiKey string) string {
 	return encryptedKey
 }
 
-//  A method that will generate a new session ID
+//	A method that will generate a new session ID
+//
 // It will return the session ID as a string
 func (api *APICONTEXT) generateSessionID() string {
 	api.setDefault()

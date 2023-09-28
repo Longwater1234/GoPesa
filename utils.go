@@ -50,7 +50,7 @@ type APICONTEXT struct {
 	parameters  map[string]string
 }
 
-// setDefualt to set default values on the APICONTEXT type
+// setDefault to set default values on the APICONTEXT type
 // It will also add the default headers
 func (api *APICONTEXT) setDefault() {
 
@@ -102,7 +102,6 @@ func (api *APICONTEXT) getHeaders() map[string]string {
 func (api *APICONTEXT) addParameter(key, value string) {
 	api.parameters[key] = value
 }
-
 
 // getPath will determine the endpoints to be used depending on the kind of transaction.
 func (api *APICONTEXT) getPath(url string) string {
