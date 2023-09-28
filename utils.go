@@ -39,7 +39,7 @@ func mustNot(message string, err error) {
 	}
 }
 
-// Type APICONTEXT that stores the API's configurable info
+// APICONTEXT stores the API's configurable info
 type APICONTEXT struct {
 	PUBLICKEY   string
 	APIKEY      string
