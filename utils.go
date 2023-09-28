@@ -51,6 +51,31 @@ type APICONTEXT struct {
 	parameters  map[string]string
 }
 
+// General http methods Enum
+type httpMethod uint8
+
+const (
+	GET    httpMethod = iota //HTTP GET method
+	POST                     //HTTP POST method
+	PUT                      //HTTP PUT method
+	DELETE                   //HTTP DELETE method
+)
+
+func (h httpMethod) String() string {
+	switch h {
+	case GET:
+		return "GET"
+	case POST:
+		return "POST"
+	case PUT:
+		return "PUT"
+	case DELETE:
+		return "DELETE"
+	default:
+		return "GET"
+	}
+}
+
 // setDefault to set default values on the APICONTEXT type
 // It will also add the default headers
 func (api *APICONTEXT) setDefault() {
@@ -113,7 +138,7 @@ func (api *APICONTEXT) getPath(url string) string {
 	}
 }
 
-func (api *APICONTEXT) sendRequest(transactionQuery map[string]string, method string, endpoint string) string {
+func (api *APICONTEXT) sendRequest(transactionQuery map[string]string, method httpMethod, endpoint string) string {
 	api.APIKEY = api.generateSessionID()
 	for k, v := range transactionQuery {
 		api.addParameter(k, v)
@@ -125,7 +150,7 @@ func (api *APICONTEXT) sendRequest(transactionQuery map[string]string, method st
 	jsonParameters, err := json.Marshal(api.parameters)
 	mustNot("Error parsing transaction queries: ", err)
 
-	req, err := http.NewRequest(method, api.getURL(endpoint), bytes.NewBuffer(jsonParameters))
+	req, err := http.NewRequest(string(method), api.getURL(endpoint), bytes.NewBuffer(jsonParameters))
 	mustNot("Error creating New request: ", err)
 
 	for k, v := range api.getHeaders() {

@@ -22,68 +22,58 @@ SOFTWARE.
 
 package gopesa
 
-// A method to conduct Customer to Business transactions.
+// C2BPayment creates Customer to Business transactions.
 // It accepts transaction queries as a parameter.
 // It returns the http response as a string.
 func (api *APICONTEXT) C2BPayment(transactionQuery map[string]string) string {
-	return api.sendRequest(transactionQuery, "POST", "c2bPayment/singleStage")
+	return api.sendRequest(transactionQuery, POST, "c2bPayment/singleStage")
 
 }
 
-// A method to conduct Business to Customer transactions.
+// B2CPayment creates Business to Customer transactions.
 // It accepts transaction queries as a parameter.
 // It returns the http response as a string.
 func (api *APICONTEXT) B2CPayment(transactionQuery map[string]string) string {
-
-	return api.sendRequest(transactionQuery, "POST", "b2cPayment")
+	return api.sendRequest(transactionQuery, POST, "b2cPayment")
 
 }
 
-// A method to conduct Business to Business transactions.
+// B2BPayment creates Business to Business transactions.
 // It accepts transaction queries as a parameter.
 // It returns the http response as a string.
 func (api *APICONTEXT) B2BPayment(transactionQuery map[string]string) string {
-
-	return api.sendRequest(transactionQuery, "POST", "b2bPayment")
+	return api.sendRequest(transactionQuery, POST, "b2bPayment")
 
 }
 
-// A method to conduct Reverse Payments.
+// ReversePayment is a method to conduct Reverse Payments.
 // It accepts transaction queries as a parameter.
 // It returns the http response as a string.
 func (api *APICONTEXT) ReversePayment(transactionQuery map[string]string) string {
-
-	return api.sendRequest(transactionQuery, "PUT", "reversal")
+	return api.sendRequest(transactionQuery, PUT, "reversal")
 
 }
 
-// A method to query a trasaction status.
+// TransactionStatus queries a given transaction status.
 // It accepts transaction queries as a parameter.
 // It returns the http response as a string.
 func (api *APICONTEXT) TransactionStatus(transactionQuery map[string]string) string {
-
-	return api.sendRequest(transactionQuery, "GET", "queryTransactionStatus")
+	return api.sendRequest(transactionQuery, GET, "queryTransactionStatus")
 }
 
 func (api *APICONTEXT) QueryBeneficiaryName(transactionQuery map[string]string) string {
-
-	return api.sendRequest(transactionQuery, "GET", "queryBeneficiaryName")
+	return api.sendRequest(transactionQuery, GET, "queryBeneficiaryName")
 
 }
 
 func (api *APICONTEXT) QueryDirectDebit(transactionQuery map[string]string) string {
-
-	return api.sendRequest(transactionQuery, "POST", "queryDirectDebit")
-
+	return api.sendRequest(transactionQuery, POST, "queryDirectDebit")
 }
 
 func (api *APICONTEXT) DirectDebitCreate(transactionQuery map[string]string) string {
-	return api.sendRequest(transactionQuery, "POST", "directDebitCreation")
-
+	return api.sendRequest(transactionQuery, POST, "directDebitCreation")
 }
 
 func (api *APICONTEXT) DirectDebitPayment(transactionQuery map[string]string) string {
-
-	return api.sendRequest(transactionQuery, "POST", "directDebitPayment")
-
+	return api.sendRequest(transactionQuery, POST, "directDebitPayment")
 }
